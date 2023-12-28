@@ -16,6 +16,9 @@ class WorkingThread extends Thread {
         // как только тред завелся - код сразу же начинает пытаться запросить у менеджера джобу для выполнения
         while (true) {
             Runnable job = threadPool.getNextJobForExecution();
+            if(job == null) {
+                return;
+            }
             try {
                 job.run();
                 // код попадет сюда только если метод не выкенет runtime exception

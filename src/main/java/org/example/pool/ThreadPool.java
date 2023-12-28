@@ -26,6 +26,15 @@ public class ThreadPool {
         }
     }
 
+    protected boolean isJoining = false;
+
+    public void joinPool() throws InterruptedException {
+        isJoining = true;
+        for (var t : workingThreads) {
+            t.join();
+        }
+    }
+
     /*
     было решено вынести этот код сюда, чтобы working thread не знал, каким образом работает под капотом pool
      */
@@ -37,8 +46,11 @@ public class ThreadPool {
             поскольку бывают ошибки пропущенного пробуждения (notify вызвался, а вот wait не отстрелился)
              */
             while (jobsList.isEmpty()) {
+                if(isJoining) {
+                    return null;
+                }
                 try {
-                    jobsList.wait();
+                    jobsList.wait(10);
                 } catch (InterruptedException ignored) {
                     /*
                     как следует из документации Object - у метода wait вызывается interruptedException в случае
