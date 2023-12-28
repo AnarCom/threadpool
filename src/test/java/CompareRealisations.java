@@ -47,7 +47,7 @@ public class CompareRealisations {
     @Test
     void compare() throws InterruptedException {
         int N_THREADS = 1000;
-        int LIST_SIZE = 50000;
+        int LIST_SIZE = 90000;
         List<Thread> threads = new ArrayList<>();
         for (int i = 0; i < N_THREADS; i++) {
             threads.add(new Thread(new SimpleNumberFounder(LIST_SIZE)));

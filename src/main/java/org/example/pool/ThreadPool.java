@@ -16,8 +16,8 @@ public class ThreadPool {
         workingThreads.forEach(WorkingThread::start);
     }
 
-    private LinkedBlockingQueue<Runnable> jobsList = new LinkedBlockingQueue<>();
-    private List<WorkingThread> workingThreads;
+    private final LinkedBlockingQueue<Runnable> jobsList = new LinkedBlockingQueue<>();
+    private final List<WorkingThread> workingThreads;
 
     public void execute(Runnable job) {
         synchronized (jobsList) {
